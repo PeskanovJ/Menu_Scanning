@@ -1,0 +1,6 @@
+@MenuParser.API_HostAddress = http://localhost:5288
+
+GET {{MenuParser.API_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
