@@ -1,12 +1,22 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using MediatR;
+using MenuParser.Application.Interfaces;
+using MenuParser.Domain.Entities;
 
 namespace MenuParser.Application.Menus.Commands.CreateMenu
 {
-    internal class CreateMenuCommandHandler
+    public class CreateMenuCommandHandler: IRequestHandler<CreateMenuCommand, Guid>
     {
+        private readonly IMenuRepository _repository;
+
+        public CreateMenuCommandHandler(IMenuRepository repository)
+        {
+            _repository = repository;
+        }
+        public async Task<Guid> Handle(CreateMenuCommand request, CancellationToken cancelationToken)
+        {
+            var menu = new Menu(request.Name);
+            await _repository.AddAsync(menu);
+            return menu.Id;
+        }
     }
 }

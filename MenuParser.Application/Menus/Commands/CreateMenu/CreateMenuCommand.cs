@@ -1,12 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using MediatR;
 
 namespace MenuParser.Application.Menus.Commands.CreateMenu
 {
-    internal class CreateMenuCommand
+    public class CreateMenuCommand : IRequest<Guid>
     {
+        public String Name { get; set; } = string.Empty;
     }
 }
