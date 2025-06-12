@@ -10,7 +10,7 @@ public class MenuItem
 
     public bool IsDeleted { get; private set; } = false;
 
-
+    private MenuItem() { }
     public MenuItem(string name, Price price)
         {  
             Name= name;

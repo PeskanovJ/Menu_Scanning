@@ -1,8 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using MenuParser.Domain.Entities;
-using MenuParser.Domain.ValueObjects;
-using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using Microsoft.EntityFrameworkCore.
+
 namespace MenuParser.Infrastructure.Persistence
 {
     public class MenuDbContext : DbContext
@@ -33,7 +31,7 @@ namespace MenuParser.Infrastructure.Persistence
                 item.OwnsOne(i => i.Price, price =>
                 {
                     price.Property(p => p.Amount).HasColumnName("PriceAmount");
-                    price.Property(p => p.Currecny).HasColumnName("PriceCurrency");
+                    price.Property(p => p.Currency).HasColumnName("PriceCurrency");
                 });
             });
         }
