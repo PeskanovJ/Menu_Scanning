@@ -18,15 +18,15 @@ namespace MenuParser.API.Controllers
             _mediator = mediator;
         }
 
-        //[HttpPost]
-        //public async Task<IActionResult> CreateMenu(CreateMenuRequest request)
-        //{
-        //    var id = await _mediator.Send(new CreateMenuCommand
-        //    {
-        //        Name = request.Name!
-        //    });
-        //    return Ok(new { Id = id });
-        //}
+        [HttpPost("upload-image")]
+        public async Task<IActionResult> UploadImage([FromForm] IFormFile file)
+        {
+            if (file == null || file.Length == 0)
+                return BadRequest("No file uploaded.");
+            var command = new ParseMenuFromImageCommand(file);
+            var result = await _mediator.Send(command);
+            return Ok(new { Menuid = result });
+        }
 
         [HttpPost]
         public async Task<IActionResult> Create([FromBody] CreateMenuCommand command)

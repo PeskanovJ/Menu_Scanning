@@ -1,15 +1,22 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using MenuParser.Domain.Entities;
+using MenuParser.Application.Interfaces;
 
 namespace MenuParser.Infrastructure.Persistence
 {
-    public class MenuDbContext : DbContext
+    public class MenuDbContext : DbContext,IApplicationDbContext
     {
         public MenuDbContext(DbContextOptions<MenuDbContext> options) : base(options) { 
         }
 
         public DbSet<Menu> Menus => Set<Menu>();
-        public DbSet<MenuItem> MenuItem => Set<MenuItem>();
+        public DbSet<MenuItem> MenuItems => Set<MenuItem>();
+
+
+        public Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
+        {
+            return base.SaveChangesAsync(cancellationToken);
+        }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
