@@ -5,19 +5,26 @@ using MediatR;
 using MenuParser.Application.Menus.Commands.CreateMenu; // or any class from Application layer
 using MenuParser.Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
+using MenuParser.Infrastructure.Services;
+using MenuParser.Application.Menus.Commands;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddAplicationServices();
-builder.Services.AddInfrastructureServices("Data Source=menuparser.db");
+builder.Services.AddInfrastructureServices(builder.Configuration.GetConnectionString("DefaultConnection"));
 builder.Services.AddDbContext<MenuDbContext>(options =>
     options.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection")));
-
 builder.Services.AddScoped<IApplicationDbContext>(provider => provider.GetRequiredService<MenuDbContext>());
 
-// Add MediatR manually (optional since Application already does it)
+builder.Services.AddScoped<IMenuImageParser, TesseractMenuImageParser>();
+
 builder.Services.AddMediatR(cfg =>
-    cfg.RegisterServicesFromAssembly(typeof(CreateMenuCommandHandler).Assembly));
+{
+    cfg.RegisterServicesFromAssembly(typeof(ParseMenuFromImageHandler).Assembly);
+    cfg.RegisterServicesFromAssembly(typeof(CreateMenuCommandHandler).Assembly);
+});
+
+
 
 // Add services to the container.
 builder.Services.AddControllers();
