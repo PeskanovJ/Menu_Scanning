@@ -72,12 +72,12 @@ namespace MenuParser.Infrastructure.Migrations
 
                             b1.Property<decimal>("Amount")
                                 .HasColumnType("TEXT")
-                                .HasColumnName("PriceAmount");
+                                .HasColumnName("Amount");
 
                             b1.Property<string>("Currency")
                                 .IsRequired()
                                 .HasColumnType("TEXT")
-                                .HasColumnName("PriceCurrency");
+                                .HasColumnName("Currency");
 
                             b1.HasKey("MenuItemId");
 

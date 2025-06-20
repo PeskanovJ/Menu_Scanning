@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace MenuParser.Infrastructure.Migrations
 {
     [DbContext(typeof(MenuDbContext))]
-    [Migration("20250619120649_UpdateMigration")]
-    partial class UpdateMigration
+    [Migration("20250620115711_InitialMigration")]
+    partial class InitialMigration
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -75,12 +75,12 @@ namespace MenuParser.Infrastructure.Migrations
 
                             b1.Property<decimal>("Amount")
                                 .HasColumnType("TEXT")
-                                .HasColumnName("PriceAmount");
+                                .HasColumnName("Amount");
 
                             b1.Property<string>("Currency")
                                 .IsRequired()
                                 .HasColumnType("TEXT")
-                                .HasColumnName("PriceCurrency");
+                                .HasColumnName("Currency");
 
                             b1.HasKey("MenuItemId");
 

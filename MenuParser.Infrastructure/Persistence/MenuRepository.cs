@@ -4,9 +4,10 @@ using Microsoft.EntityFrameworkCore;
 
 namespace MenuParser.Infrastructure.Persistence
 {
-    public class MenuRepository : IMenuRepository
+    public class MenuRepository : DbContext,IMenuRepository
     {
         private readonly MenuDbContext _context;
+        
 
         public MenuRepository(MenuDbContext context)
         {
@@ -14,15 +15,17 @@ namespace MenuParser.Infrastructure.Persistence
         }
 
 
+        public async Task<Menu?> GetIdAsync(Guid id)
+        {
+            return await _context.Menus
+                .Include(m => m.Items)
+                .FirstOrDefaultAsync(m => m.Id == id);
+        }
+
         public async Task AddAsync(Menu menu)
         {
             _context.Menus.Add(menu);
             await _context.SaveChangesAsync();
-        }
-
-        public async Task<Menu?> GetIdAsync(Guid id)
-        {
-            return await _context.Menus.Include(m => m.Items).FirstOrDefaultAsync(m => m.Id == id);
         }
     }
 }

@@ -1,6 +1,5 @@
 ﻿using MediatR;
 using MenuParser.API.Requests.MenuRequests;
-using MenuParser.Application.Menus.Commands.CreateMenu;
 using MenuParser.Application.Menus.Queries.GetMenuById;
 using Microsoft.AspNetCore.Mvc;
 
@@ -26,13 +25,6 @@ namespace MenuParser.API.Controllers
             var command = new ParseMenuFromImageCommand(file);
             var result = await _mediator.Send(command);
             return Ok(new { Menuid = result });
-        }
-
-        [HttpPost]
-        public async Task<IActionResult> Create([FromBody] CreateMenuCommand command)
-        {
-            var id = await _mediator.Send(command);
-            return Ok(id);
         }
 
 

@@ -21,4 +21,8 @@
     <ProjectReference Include="..\MenuParser.Domain\MenuParser.Domain.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Migrations\" />
+  </ItemGroup>
+
 </Project>

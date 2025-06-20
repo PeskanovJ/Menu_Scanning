@@ -9,7 +9,7 @@ namespace MenuParser.Infrastructure
     {
         public static IServiceCollection AddInfrastructureServices(this IServiceCollection services, string connectionString)
         {   
-            services.AddDbContext<MenuDbContext>(options => options.UseSqlite(connectionString));
+            services.AddDbContext<MenuRepository>(options => options.UseSqlite(connectionString));
             services.AddScoped<IMenuRepository, MenuRepository>();
             return services;
         }

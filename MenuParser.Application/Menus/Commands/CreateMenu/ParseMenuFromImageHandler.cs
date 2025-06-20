@@ -8,12 +8,12 @@ namespace MenuParser.Application.Menus.Commands
 {
     public class ParseMenuFromImageHandler : IRequestHandler<ParseMenuFromImageCommand, Guid>
     {
-        private readonly IApplicationDbContext _context;
+        private readonly IMenuRepository _menuRepository;
         private readonly IMenuImageParser _parser;
 
-        public ParseMenuFromImageHandler(IApplicationDbContext context, IMenuImageParser parser)
+        public ParseMenuFromImageHandler(IMenuRepository menuRepository, IMenuImageParser parser)
         {
-            _context = context;
+            _menuRepository = menuRepository;
             _parser = parser;
         }
 
@@ -28,8 +28,7 @@ namespace MenuParser.Application.Menus.Commands
                 menu.AddItem(menuItem);
             }
 
-            _context.Menus.Add(menu);
-            await _context.SaveChangesAsync(cancellationToken);
+            await _menuRepository.AddAsync(menu);
             return menu.Id;
         }
     }

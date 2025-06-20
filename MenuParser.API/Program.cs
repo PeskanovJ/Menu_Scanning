@@ -2,7 +2,6 @@ using MenuParser.Application;
 using MenuParser.Application.Interfaces;
 using MenuParser.Infrastructure;
 using MediatR;
-using MenuParser.Application.Menus.Commands.CreateMenu; // or any class from Application layer
 using MenuParser.Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
 using MenuParser.Infrastructure.Services;
@@ -14,14 +13,14 @@ builder.Services.AddAplicationServices();
 builder.Services.AddInfrastructureServices(builder.Configuration.GetConnectionString("DefaultConnection"));
 builder.Services.AddDbContext<MenuDbContext>(options =>
     options.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection")));
-builder.Services.AddScoped<IApplicationDbContext>(provider => provider.GetRequiredService<MenuDbContext>());
+
+builder.Services.AddScoped<IMenuRepository, MenuRepository>();
 
 builder.Services.AddScoped<IMenuImageParser, TesseractMenuImageParser>();
 
 builder.Services.AddMediatR(cfg =>
 {
     cfg.RegisterServicesFromAssembly(typeof(ParseMenuFromImageHandler).Assembly);
-    cfg.RegisterServicesFromAssembly(typeof(CreateMenuCommandHandler).Assembly);
 });
 
 
